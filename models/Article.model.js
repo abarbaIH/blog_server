@@ -3,12 +3,41 @@ const { Schema, model } = require("mongoose")
 const articleSchema = new Schema(
 
     {
-        title: {
+        name: {
             type: String,
             required: [true],
             trim: true
         },
-        content: {
+        manufacturer: {
+            type: String,
+            required: [true],
+            trim: true
+        },
+        description: {
+            type: String,
+            required: [true]
+        },
+        color: {
+            type: String,
+            required: [true]
+        },
+        price: {
+            type: Number,
+            required: [true]
+        },
+        articleImg: {
+            type: String,
+            default: "default.png"
+        },
+        screen: {
+            type: String,
+            required: [true]
+        },
+        processor: {
+            type: String,
+            required: [true]
+        },
+        ram: {
             type: String,
             required: [true]
         },
@@ -16,10 +45,6 @@ const articleSchema = new Schema(
             type: Date,
             default: Date.now
         },
-        articleImg: {
-            type: String,
-            default: "default.png"
-        }
     },
     {
         timestamps: true
