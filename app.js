@@ -6,8 +6,7 @@ const app = express();
 
 require("./config")(app);
 
-const indexRoutes = require("./routes/index.routes");
-app.use("/api", indexRoutes);
+app.use('/api', require('./routes'))
 
 require("./error-handling")(app);
 
