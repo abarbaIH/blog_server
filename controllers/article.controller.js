@@ -2,12 +2,14 @@ const { response } = require('../app')
 const Article = require('./../models/Article.model')
 
 const getArticles = (req, res, next) => {
+    setTimeout(() => {
+        Article
+            .find()
+            // .limit(3)
+            .then(response => res.json(response))
+            .catch(err => next(err))
+    }, 4000)
 
-    Article
-        .find()
-        // .limit(3)
-        .then(response => setTimeout(() => res.json(response), 1000))
-        .catch(err => next(err))
 }
 
 const newArticle = (req, res, next) => {
