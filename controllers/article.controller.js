@@ -8,28 +8,30 @@ const getArticles = (req, res, next) => {
             // .limit(3)
             .then(response => res.json(response))
             .catch(err => next(err))
-    }, 4000)
+    }, 1000)
 
 }
 
 const newArticle = (req, res, next) => {
 
-    const { name, manufacturer, description, color, price, articleImg, screen, processor, ram, date } = req.body
+    const { title, description, articleImg, date } = req.body
 
     Article
-        .create({ name, manufacturer, description, color, price, articleImg, screen, processor, ram, date })
+        .create({ title, description, articleImg, date })
         .then(response => res.json(response))
         .catch(err => next(err))
 }
 
 const getArticleDetails = (req, res, next) => {
+    setTimeout(() => {
+        const { article_id } = req.params
 
-    const { article_id } = req.params
+        Article
+            .findById(article_id)
+            .then(response => res.json(response))
+            .catch(err => next(err))
+    }, 1000)
 
-    Article
-        .findById(article_id)
-        .then(response => res.json(response))
-        .catch(err => next(err))
 }
 
 const deleteArticle = (req, res, next) => {
@@ -45,13 +47,27 @@ const deleteArticle = (req, res, next) => {
 const editArticle = (req, res, next) => {
 
     const { article_id } = req.params
-    const { name, manufacturer, description, color, price, articleImg, screen, processor, ram } = req.body
+    const { title, description, articleImg, date } = req.body
 
     Article
-        .findByIdAndUpdate(article_id, { name, manufacturer, description, color, price, articleImg, screen, processor, ram })
+        .findByIdAndUpdate(article_id, { title, description, articleImg, date })
         .then(response => res.json(response))
         .catch(err => next(err))
 
+}
+
+const searchArticle = (req, res, next) => {
+    const { search } = req.params;
+    Article
+        .find({
+            "$or": [
+                { "title": { "$regex": search, "$options": "i" } },
+                { "description": { "$regex": search, "$options": "i" } }
+            ]
+        })
+        .sort({ date: -1 })
+        .then(response => res.json(response))
+        .catch(err => next(err));
 }
 
 module.exports = {
@@ -59,5 +75,6 @@ module.exports = {
     newArticle,
     getArticleDetails,
     deleteArticle,
-    editArticle
+    editArticle,
+    searchArticle
 }

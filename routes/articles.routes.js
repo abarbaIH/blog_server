@@ -5,7 +5,8 @@ const {
   newArticle,
   getArticleDetails,
   deleteArticle,
-  editArticle
+  editArticle,
+  searchArticle
 } = require('./../controllers/article.controller')
 
 router.get('/getArticles', getArticles)
@@ -18,7 +19,7 @@ router.delete('/deleteArticle/:article_id', deleteArticle)
 
 router.put('/editArticle/:article_id', editArticle)
 
+router.get('/searchArticle/:search', searchArticle)
+
 
 module.exports = router
-
-// http://localhost:5005/api/articles/getArticleDetails/6495876e94fd8d7238733e5c
